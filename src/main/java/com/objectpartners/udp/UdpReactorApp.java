@@ -27,7 +27,7 @@ public class UdpReactorApp {
     private Log log = LogFactory.getLog(UdpReactorApp.class);
 
     @Bean
-    public DatagramServer<byte[], byte[]> datagramServer(Environment env) {
+    public DatagramServer<byte[], byte[]> datagramServer(Environment env) throws InterruptedException {
 
         final DatagramServer<byte[], byte[]> server = new DatagramServerSpec<byte[], byte[]>(NettyDatagramServer.class)
                 .env(env)
@@ -36,7 +36,7 @@ public class UdpReactorApp {
                 .consumeInput(bytes -> log.info("received a packet: " + new String(bytes)))
                 .get();
 
-        server.start();
+        server.start().await();
         return server;
     }
 
