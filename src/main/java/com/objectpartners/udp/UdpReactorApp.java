@@ -33,7 +33,7 @@ public class UdpReactorApp {
                 .env(env)
                 .listen(SocketUtils.findAvailableTcpPort())
                 .codec(StandardCodecs.BYTE_ARRAY_CODEC)
-                .consumeInput(bytes -> log.info("received a packet: " + new String(bytes)))
+                .consumeInput(bytes -> log.info("received: " + new String(bytes)))
                 .get();
 
         server.start().await();
